@@ -1,6 +1,7 @@
 #include <iostream>
-#include "Matrix.cpp"
 #include "Activation.cpp"
+#include "Matrix.cpp"
+#include "Dense.cpp"
 
 int main()
 {

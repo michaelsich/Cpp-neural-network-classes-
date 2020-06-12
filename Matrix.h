@@ -10,6 +10,7 @@
 
 #include <iostream>
 #include <fstream>
+#include "Activation.h"
 using std::string;
 
 /**
@@ -41,14 +42,16 @@ class Matrix
         Matrix  operator*   (const Matrix& rhs)  const;
         Matrix  operator*   (float scalar)       const;
         float   operator()  (int i, int j)       const;
-        inline
-        float   operator[] (int i) const {return matrix[i];}
+
+        inline float   operator[] (int i) const {return matrix[i];}
+        //TODO: probably can delete
+        inline float&  operator[] (int i)       {return this->matrix[i];}
 
         friend Matrix           operator* (float scalar, const Matrix& mtx);
         friend std::ostream&    operator<< (std::ostream& oStream, const Matrix& mtx);
         friend std::ifstream&   operator>> (std::ifstream& iStream, Matrix& mtx);
 
-    private:
+private:
         MatrixDims matrixData{};
         float* matrix;
 };
