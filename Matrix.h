@@ -7,10 +7,15 @@
 #define ACTIVE_THRESHOLD  0.1
 #define DISABLED_PXL      "  "
 #define ENABLED_PXL       "**"
+#define ERR_INVALID_SIZE            "Error: matrix size invalid"
+#define ERR_INVALID_ADDITION        "Error: cannot add matrices of diff sizes"
+#define ERR_INVALID_MULTIPLICATION  "Error: cannot add matrices of diff sizes"
+#define ERR_INVALID_INDEX           "Error: invalid index"
+#define ERR_INVALID_FILE            "Error: file is invalid"
+
 
 #include <iostream>
 #include <fstream>
-#include "Activation.h"
 using std::string;
 
 /**

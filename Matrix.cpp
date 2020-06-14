@@ -182,17 +182,20 @@ std::ostream& operator<< (std::ostream& oStream, const Matrix& mtx)
 
 std::ifstream& operator>> (std::ifstream& iStream, Matrix& mtx)
 {
-    //TODO: I think I didnt get how to implement it - manual says use .Read ??
+    char* temp = new char[sizeof(float)];
     for (int i = 0; i < mtx.matrixData.rows * mtx.matrixData.cols; ++i)
     {
         if (iStream.good())
         {
-            iStream >> mtx.matrix[i];
+            iStream.read(temp,sizeof(float));
+            mtx[i] = strtof(temp, nullptr);
         }
         else
         {
             std::cerr << ERR_INVALID_FILE << std::endl;
+            exit(EXIT_FAILURE);
         }
     }
+    delete[](temp);
     return iStream;
 }
