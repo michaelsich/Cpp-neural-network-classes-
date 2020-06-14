@@ -9,6 +9,8 @@
 class Dense
 {
     public:
+        Dense();
+        Dense(const Dense& dense);
         Dense(Matrix& weigth, Matrix& bias, Activation actFunc);
 
         inline const Matrix&     getWeights()    const {return weigth;}

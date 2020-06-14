@@ -10,3 +10,14 @@ Dense::Dense(Matrix& weigth, Matrix& bias, Activation actFunc)
     bias = bias;
     actFunc = actFunc;
 }
+
+Dense::Dense(const Dense &dense)
+{
+    weigth = dense.weigth;
+    actFunc = dense.actFunc;
+    bias = dense.bias;
+}
+
+Dense::Dense()
+= default;
+

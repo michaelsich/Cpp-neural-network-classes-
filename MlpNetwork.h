@@ -24,7 +24,8 @@ class MlpNetwork
 private:
         Matrix  weights[MLP_SIZE],
                 biases[MLP_SIZE];
-        Matrix& applyLayersOnPic(Matrix& pic, Dense* allLayers);
+        Matrix& applyLayersOnPic(Matrix& pic, Dense* allLayers, Matrix& out);
+        Digit findMaxProbResult(const Matrix& lastOutput) const;
 
 };
 

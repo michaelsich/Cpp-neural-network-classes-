@@ -20,35 +20,55 @@ MlpNetwork::MlpNetwork(const Matrix* weights, const Matrix* biases)
 
 Digit MlpNetwork::operator()(Matrix &picture)
 {
-    Digit calculatedResult = {0, 0};
     Activation relu         = Activation(Relu),
                softmax      = Activation(Softmax);
-    Dense      allLayers[]  = new Dense[MLP_SIZE];
+    Dense allLayers[MLP_SIZE];
 
     for (int i = 0; i < MLP_SIZE - 1; ++i)
     {
-        (allLayers[i]) = new Dense(weights[i], biases[i], relu);
+        (allLayers[i]) = Dense(weights[i], biases[i], relu);
     }
 
     //last layer - apply softmax
-    allLayers[MLP_SIZE - 1] = new Dense(weights[MLP_SIZE - 1],
+    allLayers[MLP_SIZE - 1] = Dense(weights[MLP_SIZE - 1],
                                         biases[MLP_SIZE - 1],
                                         softmax);
 
-    Matrix& = a
+    Matrix out = Matrix();
+    out = applyLayersOnPic(picture, allLayers, out);
+
+    Digit calculatedResult = findMaxProbResult(out);
 
 }
 
-Matrix& MlpNetwork::applyLayersOnPic(Matrix &pic, Dense* allLayers)
+Matrix& MlpNetwork::applyLayersOnPic(Matrix &pic, Dense* allLayers, Matrix& out)
 {
     // first layers
-    Matrix out = allLayers[0](pic);
-
+    out = allLayers[0](pic);
     for (int i = 1; i < MLP_SIZE - 1; ++i)
     { // all Relu layers
         out = allLayers[i](out);
     }
 
     // softmax
-    return allLayers[MLP_SIZE - 1](out);
+    //TODO: will leak?
+    Matrix& temp = out;
+    out = allLayers[MLP_SIZE - 1](out);
+    return out;
+}
+
+Digit MlpNetwork::findMaxProbResult(const Matrix &lastOutput) const
+{
+    float            maxProb = -1;
+    unsigned int     mostProbableNum = -1;
+
+    for (int i = 0; i < lastOutput.getRows(); ++i)
+    {
+        if (lastOutput[i] > maxProb)
+        {
+            maxProb = lastOutput[i];
+            mostProbableNum = i;
+        }
+    }
+    return Digit{mostProbableNum, maxProb};
 }
