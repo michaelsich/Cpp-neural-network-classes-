@@ -2,6 +2,8 @@
 #include "Activation.cpp"
 #include "Matrix.cpp"
 #include "Dense.cpp"
+#include "MlpNetwork.cpp"
+
 
 int main()
 {

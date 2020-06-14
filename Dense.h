@@ -17,7 +17,7 @@ class Dense
 
         inline Matrix operator() (const Matrix& input) const {return (input * weigth) + bias;}
 
-private:
+    private:
         Matrix weigth;
         Matrix bias;
         Activation actFunc;

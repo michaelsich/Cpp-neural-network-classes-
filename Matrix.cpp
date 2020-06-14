@@ -14,7 +14,10 @@ Matrix::Matrix()
 
 Matrix::Matrix(int rows, int cols)
 {
-    //TODO: add rows cols edge cases chcek - stderr output
+    if (rows <= 0 || cols <= 0)
+    {   // error
+        std::cerr << ERR_INVALID_SIZE << std::endl;
+    }
     matrixData.cols = cols;
     matrixData.rows = rows;
     matrix = new float[rows * cols]{0};
@@ -70,7 +73,7 @@ Matrix& Matrix::operator+= (const Matrix &rhs)
     if ((rhs.matrixData.cols != this->matrixData.cols) ||
         (rhs.matrixData.rows != this->matrixData.rows))
     {
-        //TODO: out error
+        std::cerr << ERR_INVALID_ADDITION << std::endl;
     }
 
     for (int i = 0; i < matrixData.rows * matrixData.cols; ++i)
@@ -86,7 +89,7 @@ Matrix Matrix::operator+ (const Matrix &rhs)
     if ((rhs.matrixData.cols != this->matrixData.cols) ||
         (rhs.matrixData.rows != this->matrixData.rows))
     {
-        //TODO: out error
+        std::cerr << ERR_INVALID_ADDITION << std::endl;
     }
 
     Matrix newMat = Matrix(matrixData.rows, matrixData.cols);
@@ -101,7 +104,7 @@ Matrix Matrix::operator* (const Matrix &rhs) const
 {
     if (matrixData.cols != rhs.matrixData.rows)
     {
-        //TODO: error
+        std::cerr << ERR_INVALID_MULTIPLICATION << std::endl;
     }
 
     int     newCols = rhs.getCols(),
@@ -152,7 +155,7 @@ float Matrix::operator() (int i, int j) const
 {
     if (i < 0 || j < 0)
     {
-        //TODO: throw error
+        std::cerr << ERR_INVALID_INDEX << std::endl;
     }
     return this->matrix[(i * matrixData.cols) + j];
 }
@@ -188,7 +191,7 @@ std::ifstream& operator>> (std::ifstream& iStream, Matrix& mtx)
         }
         else
         {
-            //TODO: Handle error
+            std::cerr << ERR_INVALID_FILE << std::endl;
         }
     }
     return iStream;
