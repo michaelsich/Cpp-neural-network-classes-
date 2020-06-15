@@ -45,11 +45,13 @@ void Activation::performSoftmax(Matrix &oMatrix) const
     float sumOfExpInPowerOfCoords = 0;
     for (int i = 0; i < oMatrix.getCols() * oMatrix.getRows(); ++i)
     {
-        sumOfExpInPowerOfCoords = std::exp(oMatrix[i]);
+//        std::cout << oMatrix[i] << "-->   ";
+        sumOfExpInPowerOfCoords += std::exp(oMatrix[i]);
+//        std::cout << oMatrix[i] << std::endl;
     }
     for (int i = 0; i < oMatrix.getCols() * oMatrix.getRows(); ++i)
     {
-        oMatrix[i] = (std::exp(oMatrix[i])) / sumOfExpInPowerOfCoords;
+        oMatrix[i] = (std::exp(oMatrix[i])) * (1 / sumOfExpInPowerOfCoords);
     }
 }
 
