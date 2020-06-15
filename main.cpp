@@ -159,6 +159,7 @@ int main(int argc, char **argv)
 
     Matrix weights[MLP_SIZE];
     Matrix biases[MLP_SIZE];
+
     loadParameters(argv, weights, biases);
 
     MlpNetwork mlp(weights, biases);

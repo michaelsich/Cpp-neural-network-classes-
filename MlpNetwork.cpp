@@ -35,9 +35,8 @@ Digit MlpNetwork::operator()(Matrix &picture)
                                         softmax);
 
     Matrix out = Matrix();
-    out = applyLayersOnPic(picture, allLayers, out);
-
-    Digit calculatedResult = findMaxProbResult(out);
+    applyLayersOnPic(picture, allLayers, out);
+    return findMaxProbResult(out);
 
 }
 
@@ -52,7 +51,6 @@ Matrix& MlpNetwork::applyLayersOnPic(Matrix &pic, Dense* allLayers, Matrix& out)
 
     // softmax
     //TODO: will leak?
-    Matrix& temp = out;
     out = allLayers[MLP_SIZE - 1](out);
     return out;
 }

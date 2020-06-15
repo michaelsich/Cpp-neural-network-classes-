@@ -19,10 +19,11 @@ enum ActivationType
 class Activation
 {
     public:
-        Activation(ActivationType actType = Relu);
+        Activation(ActivationType type = Relu);
         ActivationType getActivationType() const;
-        Matrix operator() (const Matrix& inputMtx) const;
 
+        Matrix      operator() (const Matrix& inputMtx) const;
+        Activation& operator=  (const Activation& rhs);
     private:
         ActivationType actType;
 

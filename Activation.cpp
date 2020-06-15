@@ -4,9 +4,9 @@
 
 #include "Activation.h"
 
-Activation::Activation(ActivationType actType)
+Activation::Activation(ActivationType type)
 {
-    actType = actType;
+    this->actType = type;
 }
 
 ActivationType Activation::getActivationType() const
@@ -51,4 +51,10 @@ void Activation::performSoftmax(Matrix &oMatrix) const
     {
         oMatrix[i] = (std::exp(oMatrix[i])) / sumOfExpInPowerOfCoords;
     }
+}
+
+Activation& Activation::operator=(const Activation& rhs)
+{
+    this->actType = rhs.actType;
+    return *this;
 }

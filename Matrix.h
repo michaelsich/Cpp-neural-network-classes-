@@ -9,7 +9,7 @@
 #define ENABLED_PXL       "**"
 #define ERR_INVALID_SIZE            "Error: matrix size invalid"
 #define ERR_INVALID_ADDITION        "Error: cannot add matrices of diff sizes"
-#define ERR_INVALID_MULTIPLICATION  "Error: cannot add matrices of diff sizes"
+#define ERR_INVALID_MULTIPLICATION  "Error: cannot X matrices "
 #define ERR_INVALID_INDEX           "Error: invalid index"
 #define ERR_INVALID_FILE            "Error: file is invalid"
 

@@ -21,6 +21,7 @@ Matrix::Matrix(int rows, int cols)
     matrixData.cols = cols;
     matrixData.rows = rows;
     matrix = new float[rows * cols]{0};
+
 }
 
 Matrix::Matrix(const Matrix &m)
@@ -63,7 +64,14 @@ Matrix& Matrix::operator= (const Matrix& rhs)
     }
 
     delete[] this->matrix;
-    *this = Matrix(rhs);
+    matrixData.rows = rhs.matrixData.rows;
+    matrixData.cols = rhs.matrixData.cols;
+    matrix = new float[matrixData.rows * matrixData.cols];
+
+    for (int i = 0; i < matrixData.rows * matrixData.cols; ++i)
+    {
+        matrix[i] = rhs.matrix[i];
+    }
 
     return *this;
 }
@@ -117,7 +125,6 @@ Matrix Matrix::operator* (const Matrix &rhs) const
     { // rows of *this
         for (int j = 0; j < rhs.matrixData.rows; ++j)
         {   // rows of rhs
-
             sum = 0;
             for (int k = 0; k < matrixData.cols; ++k)
             {   // cols of *this
@@ -182,13 +189,13 @@ std::ostream& operator<< (std::ostream& oStream, const Matrix& mtx)
 
 std::ifstream& operator>> (std::ifstream& iStream, Matrix& mtx)
 {
-    char* temp = new char[sizeof(float)];
+    char* temp = (char*)malloc(sizeof(float));
     for (int i = 0; i < mtx.matrixData.rows * mtx.matrixData.cols; ++i)
     {
         if (iStream.good())
         {
             iStream.read(temp,sizeof(float));
-            mtx[i] = strtof(temp, nullptr);
+            mtx[i] = *(float *)temp;
         }
         else
         {
@@ -196,6 +203,6 @@ std::ifstream& operator>> (std::ifstream& iStream, Matrix& mtx)
             exit(EXIT_FAILURE);
         }
     }
-    delete[](temp);
+    free(temp);
     return iStream;
 }
