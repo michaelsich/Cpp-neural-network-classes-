@@ -22,37 +22,22 @@ Digit MlpNetwork::operator()(Matrix &picture)
 {
     Activation relu         = Activation(Relu),
                softmax      = Activation(Softmax);
-    Dense allLayers[MLP_SIZE];
 
-    for (int i = 0; i < MLP_SIZE - 1; ++i)
+    for (int i = 0; i < MLP_SIZE; ++i)
     {
-        (allLayers[i]) = Dense(weights[i], biases[i], relu);
+        if (i == MLP_SIZE - 1)
+        {
+            Dense temp = Dense(weights[i], biases[i], softmax);
+            picture = softmax(temp(picture));
+        }
+        else
+        {
+            Dense temp = Dense(weights[i], biases[i], relu);
+            picture = relu(temp(picture));
+        }
     }
+    return findMaxProbResult(picture);
 
-    //last layer - apply softmax
-    allLayers[MLP_SIZE - 1] = Dense(weights[MLP_SIZE - 1],
-                                        biases[MLP_SIZE - 1],
-                                        softmax);
-
-    Matrix out = Matrix();
-    applyLayersOnPic(picture, allLayers, out);
-    return findMaxProbResult(out);
-
-}
-
-Matrix& MlpNetwork::applyLayersOnPic(Matrix &pic, Dense* allLayers, Matrix& out)
-{
-    // first layers
-    out = allLayers[0](pic);
-    for (int i = 1; i < MLP_SIZE - 1; ++i)
-    { // all Relu layers
-        out = allLayers[i](out);
-    }
-
-    // softmax
-    //TODO: will leak?
-    out = allLayers[MLP_SIZE - 1](out);
-    return out;
 }
 
 Digit MlpNetwork::findMaxProbResult(const Matrix &lastOutput) const

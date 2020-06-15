@@ -43,7 +43,7 @@ class Matrix
 
         Matrix& operator=   (const Matrix& rhs);
         Matrix& operator+=  (const Matrix& rhs);
-        Matrix  operator+   (const Matrix& rhs);
+        Matrix  operator+   (const Matrix& rhs)  const;
         Matrix  operator*   (const Matrix& rhs)  const;
         Matrix  operator*   (float scalar)       const;
         float   operator()  (int i, int j)       const;

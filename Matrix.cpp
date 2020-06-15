@@ -92,7 +92,7 @@ Matrix& Matrix::operator+= (const Matrix &rhs)
 
 }
 
-Matrix Matrix::operator+ (const Matrix &rhs)
+Matrix Matrix::operator+ (const Matrix &rhs) const
 {
     if ((rhs.matrixData.cols != this->matrixData.cols) ||
         (rhs.matrixData.rows != this->matrixData.rows))
@@ -100,7 +100,7 @@ Matrix Matrix::operator+ (const Matrix &rhs)
         std::cerr << ERR_INVALID_ADDITION << std::endl;
     }
 
-    Matrix newMat = Matrix(matrixData.rows, matrixData.cols);
+    Matrix newMat(matrixData.rows, matrixData.cols);
     for (int i = 0; i < matrixData.rows * matrixData.cols; ++i)
     {
         newMat.matrix[i] = this->matrix[i] + rhs.matrix[i];
@@ -123,12 +123,12 @@ Matrix Matrix::operator* (const Matrix &rhs) const
 
     for (int i = 0; i < matrixData.rows; ++i)
     { // rows of *this
-        for (int j = 0; j < rhs.matrixData.rows; ++j)
-        {   // rows of rhs
+        for (int j = 0; j < rhs.matrixData.cols; ++j)
+        {   // cols of rhs
             sum = 0;
             for (int k = 0; k < matrixData.cols; ++k)
             {   // cols of *this
-                sum += (*this)(i,k) * rhs(k,i);
+                sum += (*this)(i,k) * rhs(k,j);
             }
             multiMtx.matrix[(i * newCols) + j] = sum;
         }
@@ -160,9 +160,10 @@ Matrix operator*(const float scalar, const Matrix &mtx)
 
 float Matrix::operator() (int i, int j) const
 {
-    if (i < 0 || j < 0)
+    if (i < 0 || j < 0 || i >= matrixData.rows || j >= matrixData.cols)
     {
-        std::cerr << ERR_INVALID_INDEX << std::endl;
+        std::cerr << ERR_INVALID_INDEX << " i: " << i << " j: " << j << std::endl;
+        exit(EXIT_FAILURE);
     }
     return this->matrix[(i * matrixData.cols) + j];
 }
