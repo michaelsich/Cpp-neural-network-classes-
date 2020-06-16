@@ -6,6 +6,9 @@
 
 #include "Activation.h"
 
+/**
+ * @brief dense object of mlp network
+ */
 class Dense
 {
     public:

@@ -4,6 +4,11 @@
 
 #include "MlpNetwork.h"
 
+/**
+ * @brief ctor
+ * @param weights weights matrix array pointer
+ * @param biases biases matrices array pointer
+ */
 MlpNetwork::MlpNetwork(const Matrix* weights, const Matrix* biases)
 {
     if (weights == nullptr || biases == nullptr)
@@ -18,6 +23,9 @@ MlpNetwork::MlpNetwork(const Matrix* weights, const Matrix* biases)
     }
 }
 
+/**
+ * @brief operator ()
+ */
 Digit MlpNetwork::operator()(Matrix &picture)
 {
     Activation relu         = Activation(Relu),
@@ -40,6 +48,9 @@ Digit MlpNetwork::operator()(Matrix &picture)
 
 }
 
+/**
+ * @brief private find max prob
+ */
 Digit MlpNetwork::findMaxProbResult(const Matrix &lastOutput) const
 {
     float            maxProb = -1;

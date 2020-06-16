@@ -3,17 +3,25 @@
 //
 
 #include "Activation.h"
-
+/**
+ * @brief activation class
+ */
 Activation::Activation(ActivationType type)
 {
     this->actType = type;
 }
 
+/**
+ * @brief getter of activation type
+ */
 ActivationType Activation::getActivationType() const
 {
     return this->actType;
 }
 
+/**
+ * @brief operator ()
+ */
 Matrix Activation::operator()(const Matrix& inputMtx) const
 {
     Matrix productMatrix = Matrix(inputMtx);
@@ -29,6 +37,9 @@ Matrix Activation::operator()(const Matrix& inputMtx) const
     return productMatrix;
 }
 
+/**
+ * @brief algo of Relu function on the matrix
+ */
 void Activation::performRelu(Matrix &oMatrix) const
 {
     for (int i = 0; i < oMatrix.getRows() * oMatrix.getCols(); ++i)
@@ -40,6 +51,9 @@ void Activation::performRelu(Matrix &oMatrix) const
     }
 }
 
+/**
+ * @brief algo of Softmax function on the matrix
+ */
 void Activation::performSoftmax(Matrix &oMatrix) const
 {
     float sumOfExpInPowerOfCoords = 0;
@@ -53,6 +67,9 @@ void Activation::performSoftmax(Matrix &oMatrix) const
     }
 }
 
+/**
+ * @brief operator = of this class
+ */
 Activation& Activation::operator=(const Activation& rhs)
 {
     this->actType = rhs.actType;

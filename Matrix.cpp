@@ -3,7 +3,9 @@
 //
 
 #include "Matrix.h"
-
+/**
+ * @brief def ctor
+ */
 Matrix::Matrix()
 {
     matrixData.cols = 1;
@@ -11,7 +13,11 @@ Matrix::Matrix()
     matrix = new float[DEFAULT_CTOR_SIZE];
     matrix[0] = 0;
 }
-
+/**
+ * @brief ctor
+ * @param rows rows
+ * @param cols cols
+ */
 Matrix::Matrix(int rows, int cols)
 {
     if (rows <= 0 || cols <= 0)
@@ -24,7 +30,10 @@ Matrix::Matrix(int rows, int cols)
     matrix = new float[rows * cols]{0};
 
 }
-
+/**
+ * @brief copy ctor
+ * @param m matrix (const)
+ */
 Matrix::Matrix(const Matrix &m)
 {
     matrixData.rows = m.matrixData.rows;
@@ -36,7 +45,10 @@ Matrix::Matrix(const Matrix &m)
         matrix[i] = m.matrix[i];
     }
 }
-
+/**
+ * @brief turns matrix into a single column vector
+ * @return ref to the matrix
+ */
 Matrix& Matrix::vectorize()
 {
     this->matrixData.rows = this->matrixData.rows * this->matrixData.cols;
@@ -45,6 +57,9 @@ Matrix& Matrix::vectorize()
     return *this;
 }
 
+/**
+ * @brief strange way to print matrix elements
+ */
 void Matrix::plainPrint() const
 {
     for (int i = 0; i < this->matrixData.rows; ++i)
@@ -57,6 +72,11 @@ void Matrix::plainPrint() const
     }
 }
 
+/**
+ * @brief operator = of matrix class
+ * @param rhs right hand side
+ * @return ref to new matrix
+ */
 Matrix& Matrix::operator= (const Matrix& rhs)
 {
     if (this == &rhs)
@@ -77,6 +97,9 @@ Matrix& Matrix::operator= (const Matrix& rhs)
     return *this;
 }
 
+/**
+ * @brief operator +=
+ */
 Matrix& Matrix::operator+= (const Matrix &rhs)
 {
     if ((rhs.matrixData.cols != this->matrixData.cols) ||
@@ -94,6 +117,9 @@ Matrix& Matrix::operator+= (const Matrix &rhs)
 
 }
 
+/**
+ * @brief opertor +
+ */
 Matrix Matrix::operator+ (const Matrix &rhs) const
 {
     if ((rhs.matrixData.cols != this->matrixData.cols) ||
@@ -111,6 +137,9 @@ Matrix Matrix::operator+ (const Matrix &rhs) const
     return newMat;
 }
 
+/**
+ * @brief opertor * with matrix
+ */
 Matrix Matrix::operator* (const Matrix &rhs) const
 {
     if (matrixData.cols != rhs.matrixData.rows)
@@ -140,6 +169,9 @@ Matrix Matrix::operator* (const Matrix &rhs) const
     return multiMtx;
 }
 
+/**
+ * @brief opertor * for scalar (scalar is rhs)
+ */
 Matrix Matrix::operator*(const float scalar) const
 {
     Matrix newMtx = Matrix(matrixData.rows, matrixData.cols);
@@ -151,6 +183,9 @@ Matrix Matrix::operator*(const float scalar) const
     return newMtx;
 }
 
+/**
+ * @brief opertor * for scalar (scalar is rhs)
+ */
 Matrix operator*(const float scalar, const Matrix &mtx)
 {
     Matrix newMtx = Matrix(mtx.matrixData.rows, mtx.matrixData.cols);
@@ -162,6 +197,9 @@ Matrix operator*(const float scalar, const Matrix &mtx)
     return newMtx;
 }
 
+/**
+ * @brief opertor ()
+ */
 float Matrix::operator() (int i, int j) const
 {
     if (i < 0 || j < 0 || i >= matrixData.rows || j >= matrixData.cols)
@@ -172,6 +210,10 @@ float Matrix::operator() (int i, int j) const
     return this->matrix[(i * matrixData.cols) + j];
 }
 
+/**
+ * @brief opertor()
+ * return a refrence
+ */
 float& Matrix::operator()(int i, int j)
 {
     if (i < 0 || j < 0 || i >= matrixData.rows || j >= matrixData.cols)
@@ -182,6 +224,12 @@ float& Matrix::operator()(int i, int j)
     return (matrix[(i * matrixData.cols) + j]);
 }
 
+/**
+ * @brief prints the current matrix to the given oStream
+ * @param oStream output stream
+ * @param mtx matrix
+ * @return the oStream
+ */
 std::ostream& operator<< (std::ostream& oStream, const Matrix& mtx)
 {
     for (int i = 0; i < mtx.matrixData.rows; ++i)
@@ -202,6 +250,12 @@ std::ostream& operator<< (std::ostream& oStream, const Matrix& mtx)
     return oStream;
 }
 
+/**
+ * @brief inputs the matrix values from the given iStream
+ * @param iStream random input stream (file)
+ * @param mtx matrix to input into
+ * @return the iStream
+ */
 std::istream& operator>> (std::istream& iStream, Matrix& mtx)
 {
     char* temp = (char*)malloc(sizeof(float));
@@ -227,6 +281,9 @@ std::istream& operator>> (std::istream& iStream, Matrix& mtx)
     return iStream;
 }
 
+/**
+ * @brief getter for the element at the i'th index in the matrix
+ */
 float Matrix::operator[](int i) const
 {
     if (i < 0 || i >= matrixData.cols * matrixData.rows)
@@ -236,7 +293,9 @@ float Matrix::operator[](int i) const
     }
     return matrix[i];
 }
-
+/**
+ * @brief getter for at the i'th index refrence in the matrix
+ */
 float &Matrix::operator[](int i)
 {
     if (i < 0 || i >= matrixData.cols * matrixData.rows)

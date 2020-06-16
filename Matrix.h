@@ -26,6 +26,9 @@ typedef struct MatrixDims
     int rows, cols;
 } MatrixDims;
 
+/**
+ * @brief matrix object in the mlp network
+ */
 class Matrix
 {
     public:
