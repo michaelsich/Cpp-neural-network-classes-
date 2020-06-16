@@ -4,7 +4,7 @@
 #define MATRIX_H
 
 #define DEFAULT_CTOR_SIZE 1
-#define ACTIVE_THRESHOLD  0.1
+#define ACTIVE_THRESHOLD  0.1f
 #define DISABLED_PXL      "  "
 #define ENABLED_PXL       "**"
 #define ERR_INVALID_SIZE            "Error: matrix size invalid"
@@ -15,7 +15,6 @@
 
 
 #include <iostream>
-#include <fstream>
 using std::string;
 
 /**
@@ -47,14 +46,13 @@ class Matrix
         Matrix  operator*   (const Matrix& rhs)  const;
         Matrix  operator*   (float scalar)       const;
         float   operator()  (int i, int j)       const;
-
-        inline float   operator[] (int i) const {return matrix[i];}
-        //TODO: probably can delete
-        inline float&  operator[] (int i)       {return this->matrix[i];}
+        float   operator[]  (int i)              const;
+        float&  operator()  (int i, int j);
+        float&  operator[]  (int i);
 
         friend Matrix           operator* (float scalar, const Matrix& mtx);
         friend std::ostream&    operator<< (std::ostream& oStream, const Matrix& mtx);
-        friend std::ifstream&   operator>> (std::ifstream& iStream, Matrix& mtx);
+        friend std::istream&   operator>> (std::istream& iStream, Matrix& mtx);
 
 private:
         MatrixDims matrixData{};

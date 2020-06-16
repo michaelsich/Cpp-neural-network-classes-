@@ -17,6 +17,7 @@ Matrix::Matrix(int rows, int cols)
     if (rows <= 0 || cols <= 0)
     {   // error
         std::cerr << ERR_INVALID_SIZE << std::endl;
+        exit(EXIT_FAILURE);
     }
     matrixData.cols = cols;
     matrixData.rows = rows;
@@ -82,6 +83,7 @@ Matrix& Matrix::operator+= (const Matrix &rhs)
         (rhs.matrixData.rows != this->matrixData.rows))
     {
         std::cerr << ERR_INVALID_ADDITION << std::endl;
+        exit(EXIT_FAILURE);
     }
 
     for (int i = 0; i < matrixData.rows * matrixData.cols; ++i)
@@ -98,6 +100,7 @@ Matrix Matrix::operator+ (const Matrix &rhs) const
         (rhs.matrixData.rows != this->matrixData.rows))
     {
         std::cerr << ERR_INVALID_ADDITION << std::endl;
+        exit(EXIT_FAILURE);
     }
 
     Matrix newMat(matrixData.rows, matrixData.cols);
@@ -113,6 +116,7 @@ Matrix Matrix::operator* (const Matrix &rhs) const
     if (matrixData.cols != rhs.matrixData.rows)
     {
         std::cerr << ERR_INVALID_MULTIPLICATION << std::endl;
+        exit(EXIT_FAILURE);
     }
 
     int     newCols = rhs.getCols(),
@@ -168,6 +172,16 @@ float Matrix::operator() (int i, int j) const
     return this->matrix[(i * matrixData.cols) + j];
 }
 
+float& Matrix::operator()(int i, int j)
+{
+    if (i < 0 || j < 0 || i >= matrixData.rows || j >= matrixData.cols)
+    {
+        std::cerr << ERR_INVALID_INDEX << " i: " << i << " j: " << j << std::endl;
+        exit(EXIT_FAILURE);
+    }
+    return (matrix[(i * matrixData.cols) + j]);
+}
+
 std::ostream& operator<< (std::ostream& oStream, const Matrix& mtx)
 {
     for (int i = 0; i < mtx.matrixData.rows; ++i)
@@ -188,7 +202,7 @@ std::ostream& operator<< (std::ostream& oStream, const Matrix& mtx)
     return oStream;
 }
 
-std::ifstream& operator>> (std::ifstream& iStream, Matrix& mtx)
+std::istream& operator>> (std::istream& iStream, Matrix& mtx)
 {
     char* temp = (char*)malloc(sizeof(float));
     for (int i = 0; i < mtx.matrixData.rows * mtx.matrixData.cols; ++i)
@@ -205,5 +219,32 @@ std::ifstream& operator>> (std::ifstream& iStream, Matrix& mtx)
         }
     }
     free(temp);
+    if (iStream.peek() != EOF)
+    {
+        std::cerr << ERR_INVALID_FILE << std::endl;
+        exit(EXIT_FAILURE);
+    }
     return iStream;
 }
+
+float Matrix::operator[](int i) const
+{
+    if (i < 0 || i >= matrixData.cols * matrixData.rows)
+    {
+        std::cerr << ERR_INVALID_INDEX << " i: " << i << std::endl;
+        exit(EXIT_FAILURE);
+    }
+    return matrix[i];
+}
+
+float &Matrix::operator[](int i)
+{
+    if (i < 0 || i >= matrixData.cols * matrixData.rows)
+    {
+        std::cerr << ERR_INVALID_INDEX << " i: " << i << std::endl;
+        exit(EXIT_FAILURE);
+    }
+    return matrix[i];
+}
+
+

@@ -23,6 +23,7 @@ Dense &Dense::operator=(const Dense &rhs)
     this->weigth  = rhs.weigth;
     this->bias    = rhs.bias;
     this->actFunc = rhs.actFunc;
+    return (*this);
 }
 
 Dense::Dense()
